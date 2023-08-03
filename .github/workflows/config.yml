@@ -1,5 +1,6 @@
 # Mutual Fund Tracker Workflow
-name: Build
+name: Generate build
+
 on:
 # When it will be triggered
 # And in which branch
@@ -9,6 +10,8 @@ on:
   push:
     branches:
       - main
+
+  workflow_dispatch:
 
 jobs:
   build:
@@ -46,3 +49,4 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+        run: ./gradlew assembleDebug
