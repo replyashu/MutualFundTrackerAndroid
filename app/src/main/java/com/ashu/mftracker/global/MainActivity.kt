@@ -1,4 +1,4 @@
-package com.ashu.mftracker
+package com.ashu.mftracker.global
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.ashu.mftracker.R
 import com.ashu.mftracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
