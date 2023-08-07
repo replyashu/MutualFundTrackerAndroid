@@ -1,4 +1,4 @@
-package com.ashu.mftracker.global.di
+package com.ashu.mftracker.di
 
 import dagger.Module
 import dagger.hilt.InstallIn

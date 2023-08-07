@@ -1,4 +1,4 @@
-package com.ashu.mftracker.global.di
+package com.ashu.mftracker.di
 
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,13 +15,5 @@ object ApiModule {
 //    @Singleton
 //    @Provides
 //    fun provideUserApiHelper(userAPiHelper: UserApiHelperImp): UserAPiHelper = userAPiHelper
-//
-//    @Singleton
-//    @Provides
-//    fun provideSalaryApiService(retrofit: Retrofit) = retrofit.create(SalaryApiService::class.java)
-//
-//    @Singleton
-//    @Provides
-//    fun provideSalaryApiHelper(salaryApiHelper: SalaryApiHelperImp): SalaryApiHelper = salaryApiHelper
 
 }
