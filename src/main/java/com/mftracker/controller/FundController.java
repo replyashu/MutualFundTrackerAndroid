@@ -1,6 +1,8 @@
 package com.mftracker.controller;
 
 import com.mftracker.data.MutualFunds;
+import com.mftracker.service.funds.MutualFundService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,9 @@ import java.util.List;
 @RestController
 public class FundController {
 
+    @Autowired
+    MutualFundService mutualFundService;
+
     @RequestMapping("/get-mutual-funds")
     @ResponseBody
     public List<MutualFunds> fetchMutualFundsList() {
@@ -26,7 +31,9 @@ public class FundController {
                         MutualFunds[].class);
         MutualFunds[] funds = response.getBody();
 
-        System.out.println("result" + Arrays.stream(funds).toList());
+        for (MutualFunds fund: funds) {
+            mutualFundService.saveMutualFunds(fund);
+        }
 
         return Arrays.stream(funds).toList();
     }
@@ -44,6 +51,8 @@ public class FundController {
         MutualFunds[] funds = response.getBody();
 
         System.out.println("result" + Arrays.stream(funds).toList());
+
+
 
         return Arrays.stream(funds).toList();
     }
