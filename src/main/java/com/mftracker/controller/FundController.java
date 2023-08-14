@@ -1,6 +1,6 @@
 package com.mftracker.controller;
 
-import com.mftracker.data.MutualFunds;
+import com.mftracker.entity.MutualFunds;
 import com.mftracker.service.funds.MutualFundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +31,13 @@ public class FundController {
                         MutualFunds[].class);
         MutualFunds[] funds = response.getBody();
 
-        for (MutualFunds fund: funds) {
-            mutualFundService.saveMutualFunds(fund);
-        }
+//        for (MutualFunds fund: funds) {
+//            mutualFundService.saveMutualFunds(fund);
+//        }
+        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList();
+        mutualFundService.saveAllMutualFunds(mutualFunds);
 
-        return Arrays.stream(funds).toList();
+        return mutualFunds;
     }
 
     @RequestMapping("/search-mutual-funds")
