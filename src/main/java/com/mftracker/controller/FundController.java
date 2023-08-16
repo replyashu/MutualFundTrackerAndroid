@@ -1,18 +1,23 @@
 package com.mftracker.controller;
 
-import com.mftracker.data.MutualFunds;
+import com.mftracker.entity.MutualFunds;
+import com.mftracker.service.funds.MutualFundService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class FundController {
+
+    @Autowired
+    MutualFundService mutualFundService;
 
     @RequestMapping("/get-mutual-funds")
     @ResponseBody
@@ -26,9 +31,38 @@ public class FundController {
                         MutualFunds[].class);
         MutualFunds[] funds = response.getBody();
 
-        System.out.println("result" + Arrays.stream(funds).toList());
+        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList();
+        mutualFundService.saveAllMutualFunds(mutualFunds);
 
-        return Arrays.stream(funds).toList();
+        return mutualFunds;
+    }
+
+    @Cacheable("mutual-funds")
+    @RequestMapping("/find-mutual-funds")
+    @ResponseBody
+    public Optional<MutualFunds> fetchMutualFund(@RequestParam(name="id") String schemaId) {
+        return mutualFundService.findByUMutualFundSchemeId(schemaId);
+    }
+
+    @CachePut(value = "mutual-funds", key = "#schemeCode")
+    @PostMapping("/update")
+    public List<MutualFunds> updateMutualFunds() {
+        String uri = "https://api.mfapi.in/mf";
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<MutualFunds[]> response =
+                restTemplate.getForEntity(
+                        uri,
+                        MutualFunds[].class);
+        MutualFunds[] funds = response.getBody();
+
+//        for (MutualFunds fund: funds) {
+//            mutualFundService.saveMutualFunds(fund);
+//        }
+        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList();
+        mutualFundService.saveAllMutualFunds(mutualFunds);
+
+        return mutualFunds;
     }
 
     @RequestMapping("/search-mutual-funds")
@@ -42,8 +76,6 @@ public class FundController {
                         uri,
                         MutualFunds[].class);
         MutualFunds[] funds = response.getBody();
-
-        System.out.println("result" + Arrays.stream(funds).toList());
 
         return Arrays.stream(funds).toList();
     }
