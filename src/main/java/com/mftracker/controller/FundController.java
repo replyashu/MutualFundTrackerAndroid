@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,15 +25,21 @@ public class FundController {
     public List<MutualFunds> fetchMutualFundsList() {
         String uri = "https://api.mfapi.in/mf";
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<MutualFunds[]> response =
-                restTemplate.getForEntity(
-                        uri,
-                        MutualFunds[].class);
-        MutualFunds[] funds = response.getBody();
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<MutualFunds[]> response =
+//                restTemplate.getForEntity(
+//                        uri,
+//                        MutualFunds[].class);
+//        MutualFunds[] funds = response.getBody();
 
-        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList().subList(0, 11);
-        mutualFundService.saveAllMutualFunds(mutualFunds);
+//        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList().subList(0, 11);
+//        mutualFundService.saveAllMutualFunds(mutualFunds);
+
+        List<MutualFunds> mutualFunds = new ArrayList();
+        MutualFunds mf = new MutualFunds();
+        mf.setSchemeCode("100");
+        mf.setSchemeName("Nippon");
+        mutualFunds.add(mf);
 
         return mutualFunds;
     }
