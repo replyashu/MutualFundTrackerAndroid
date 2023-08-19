@@ -59,7 +59,7 @@ public class FundController {
 //        for (MutualFunds fund: funds) {
 //            mutualFundService.saveMutualFunds(fund);
 //        }
-        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList();
+        List<MutualFunds> mutualFunds = Arrays.stream(funds).toList().subList(0, 10);
         mutualFundService.saveAllMutualFunds(mutualFunds);
 
         return mutualFunds;
