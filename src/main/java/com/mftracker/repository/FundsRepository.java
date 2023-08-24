@@ -1,15 +1,12 @@
 package com.mftracker.repository;
 
 
-import com.mftracker.entity.MutualFunds;
-import com.mftracker.entity.User;
+import com.mftracker.entity.MutualFund;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FundsRepository extends JpaRepository<MutualFunds, Long> {
+public interface FundsRepository extends JpaRepository<MutualFund, String> {
 
 //    MutualFunds findByMutualFundSchemeName(String fundName);
 //

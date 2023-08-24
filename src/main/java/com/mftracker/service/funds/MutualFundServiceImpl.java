@@ -1,7 +1,7 @@
 package com.mftracker.service.funds;
 
 
-import com.mftracker.entity.MutualFunds;
+import com.mftracker.entity.MutualFund;
 import com.mftracker.entity.User;
 import com.mftracker.repository.FundsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ public class MutualFundServiceImpl implements MutualFundService {
     private FundsRepository fundsRepository;
 
     @Override
-    public void saveMutualFunds(MutualFunds mutualFunds) {
-        fundsRepository.save(mutualFunds);
+    public void saveMutualFunds(MutualFund mutualFund) {
+        fundsRepository.save(mutualFund);
     }
 
     @Override
-    public int saveAllMutualFunds(List<com.mftracker.entity.MutualFunds> mutualFunds) {
-        List<com.mftracker.entity.MutualFunds> funds = fundsRepository.saveAll(mutualFunds);
+    public int saveAllMutualFunds(List<MutualFund> mutualFunds) {
+        List<MutualFund> funds = fundsRepository.saveAll(mutualFunds);
         return funds.size();
     }
 
@@ -33,12 +33,20 @@ public class MutualFundServiceImpl implements MutualFundService {
     }
 
     @Override
-    public Optional<MutualFunds> findByUMutualFundSchemeId(String id) {
-        return fundsRepository.findById(Long.valueOf(id));
+    public MutualFund findByMutualFundSchemeId(String id) {
+        System.out.println(id);
+        System.out.println(Long.valueOf(id));
+        Optional<MutualFund> mf = fundsRepository.findById(id);
+
+        if (mf.get() != null) {
+            return mf.get();
+        } else {
+            return new MutualFund();
+        }
     }
 
     @Override
-    public List<MutualFunds> findAllMutualFunds() {
+    public List<MutualFund> findAllMutualFunds() {
         return fundsRepository.findAll();
     }
 }
