@@ -3,6 +3,7 @@ package com.mftracker.controller;
 import com.mftracker.data.MetaNav;
 import com.mftracker.entity.MutualFund;
 import com.mftracker.entity.MutualFundNav;
+import com.mftracker.entity.MutualFundWithoutNav;
 import com.mftracker.service.funds.MutualFundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
@@ -31,10 +32,20 @@ public class FundController {
                 restTemplate.getForEntity(
                         uri,
                         MutualFund[].class);
+
         MutualFund[] funds = response.getBody();
 
+        ResponseEntity<MutualFundWithoutNav[]> responseWithoutNav =
+                restTemplate.getForEntity(
+                        uri,
+                        MutualFundWithoutNav[].class);
+
+        MutualFundWithoutNav[] mutualFundWithoutNavs = responseWithoutNav.getBody();
+
         List<MutualFund> mutualFunds = Arrays.stream(funds).toList();
+        List<MutualFundWithoutNav> mutualFundWithoutNavs1 = Arrays.stream(mutualFundWithoutNavs).toList();
         mutualFundService.saveAllMutualFunds(mutualFunds);
+        mutualFundService.saveAllMutualFundsWithoutNav(mutualFundWithoutNavs1);
 
         return mutualFunds;
     }
@@ -58,9 +69,6 @@ public class FundController {
                         MutualFund[].class);
         MutualFund[] funds = response.getBody();
 
-//        for (MutualFunds fund: funds) {
-//            mutualFundService.saveMutualFunds(fund);
-//        }
         List<MutualFund> mutualFunds = Arrays.stream(funds).toList();
         mutualFundService.saveAllMutualFunds(mutualFunds);
 
@@ -106,6 +114,12 @@ public class FundController {
     @ResponseBody
     public List<MutualFund> fetchAllMutualFundsList() {
         return mutualFundService.findAllMutualFunds();
+    }
+
+    @RequestMapping("/fetch-mutual-funds-names")
+    @ResponseBody
+    public List<MutualFundWithoutNav> fetchAllMutualFundsListWithoutNav() {
+        return mutualFundService.findAllMutualfundsWithoutNav();
     }
 
     private MutualFund findMutualFund(String schemeId) {

@@ -12,8 +12,4 @@ public class MutualFundNav {
     private long id;
     private String date;
     private String nav;
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "schemeCode", nullable = false)
-//    private MutualFund mutualFundNav;
 }

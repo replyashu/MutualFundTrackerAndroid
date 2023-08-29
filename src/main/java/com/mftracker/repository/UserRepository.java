@@ -11,11 +11,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserId(String userId);
 
-    @Query(value = "SELECT * FROM tax_user u WHERE u.user_id = :userId",
+    @Query(value = "SELECT * FROM user_details u WHERE u.user_id = :userId",
             nativeQuery = true)
     User findUser(@Param("userId") String userId);
 
-    @Query(value = "SELECT * FROM tax_user u WHERE u.email = :email LIMIT 1",
+    @Query(value = "SELECT * FROM user_details u WHERE u.email = :email LIMIT 1",
             nativeQuery = true)
     User findByEmailUser(@Param("email") String email);
 }

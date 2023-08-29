@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Table(name = "user-details")
+@Table(name = "user_details")
 @Entity
 @Data
 public class User {

@@ -1,6 +1,7 @@
 package com.mftracker.service.funds;
 
 import com.mftracker.entity.MutualFund;
+import com.mftracker.entity.MutualFundWithoutNav;
 import com.mftracker.entity.User;
 
 import java.util.List;
@@ -13,9 +14,13 @@ public interface MutualFundService {
 
     public int saveAllMutualFunds(List<MutualFund> mutualFunds);
 
+    public int saveAllMutualFundsWithoutNav(List<MutualFundWithoutNav> mutualFunds);
+
     public User findUserByMutualFundSchemeName(String email);
 
     public MutualFund findByMutualFundSchemeId(String id);
 
     public List<MutualFund> findAllMutualFunds();
+
+    public List<MutualFundWithoutNav> findAllMutualfundsWithoutNav();
 }
