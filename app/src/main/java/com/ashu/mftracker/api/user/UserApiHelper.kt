@@ -6,7 +6,7 @@ import com.ashu.mftracker.data.response.RegisterResponse
 import com.ashu.mftracker.data.user.ProfileUser
 import retrofit2.Response
 
-interface UserAPiHelper {
+interface UserApiHelper {
 
     suspend fun registerNewUser(registerUser: RegisterUser): Response<RegisterResponse>
 

@@ -1,11 +1,11 @@
 package com.ashu.mftracker.repository
 
-import com.ashu.mftracker.api.user.UserAPiHelper
+import com.ashu.mftracker.api.user.UserApiHelper
 import com.ashu.mftracker.data.requests.NotificationToken
 import com.ashu.mftracker.data.requests.RegisterUser
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(private val userAPiHelper: UserAPiHelper) {
+class UserRepository @Inject constructor(private val userAPiHelper: UserApiHelper) {
 
     suspend fun registerUser(registerUser: RegisterUser) = userAPiHelper.registerNewUser(registerUser)
 
