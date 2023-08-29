@@ -10,6 +10,12 @@ plugins {
 android {
     compileSdk 33
 
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
     defaultConfig {
         applicationId "com.ashu.mftracker"
         minSdk 21
