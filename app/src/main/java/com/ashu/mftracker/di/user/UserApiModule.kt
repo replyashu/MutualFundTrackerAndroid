@@ -1,6 +1,6 @@
-package com.ashu.mftracker.di
+package com.ashu.mftracker.di.user
 
-import com.ashu.mftracker.api.user.UserAPiHelper
+import com.ashu.mftracker.api.user.UserApiHelper
 import com.ashu.mftracker.api.user.UserApiHelperImp
 import com.ashu.mftracker.api.user.UserApiService
 import dagger.Module
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object UserApiModule {
 
     @Singleton
     @Provides
@@ -20,6 +20,6 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideUserApiHelper(userAPiHelper: UserApiHelperImp): UserAPiHelper = userAPiHelper
+    fun provideUserApiHelper(userAPiHelper: UserApiHelperImp): UserApiHelper = userAPiHelper
 
 }

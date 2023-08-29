@@ -7,7 +7,7 @@ import com.ashu.mftracker.data.user.ProfileUser
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserApiHelperImp @Inject constructor(private val userApiService: UserApiService): UserAPiHelper {
+class UserApiHelperImp @Inject constructor(private val userApiService: UserApiService): UserApiHelper {
 
     override suspend fun registerNewUser(registerUser: RegisterUser): Response<RegisterResponse> =
         userApiService.registerUser(registerUser)
