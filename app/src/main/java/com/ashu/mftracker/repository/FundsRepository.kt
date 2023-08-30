@@ -9,4 +9,6 @@ class FundsRepository @Inject constructor(private val fundsApiHelper: FundsApiHe
 
     suspend fun fetchMutualFundsWithoutNav() = fundsApiHelper.fetchMutualFundsWithoutNav()
 
+    suspend fun fetchMutualFundNav(schemeId: String) = fundsApiHelper.fetchMutualFundNav(schemeId)
+
 }
