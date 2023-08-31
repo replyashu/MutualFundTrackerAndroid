@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ashu.mftracker.data.response.MutualFundNav
 import com.ashu.mftracker.data.response.MutualFundWithoutNav
 import com.ashu.mftracker.data.response.RegisterResponse
 import com.ashu.mftracker.global.network.Resource
@@ -20,10 +21,15 @@ class HomeViewModel @Inject constructor(private val fundsRepository: FundsReposi
     }
     val text: LiveData<String> = _text
 
-    private val _fetchMutualFunds = MutableLiveData<Resource<MutualFundWithoutNav>>()
+    private val _fetchMutualFunds = MutableLiveData<Resource<ArrayList<MutualFundWithoutNav>>>()
 
-    val fetchMutualFunds: LiveData<Resource<MutualFundWithoutNav>>
+    private val _fetchMutualFundNav = MutableLiveData<Resource<List<MutualFundNav>>>()
+
+    val fetchMutualFunds: LiveData<Resource<ArrayList<MutualFundWithoutNav>>>
         get() = _fetchMutualFunds
+
+    val fetchMutualFundNav: LiveData<Resource<List<MutualFundNav>>>
+        get() = _fetchMutualFundNav
 
     fun retrieveMutualFunds() = viewModelScope.launch {
         _fetchMutualFunds.postValue(Resource.loading(null))
@@ -39,5 +45,20 @@ class HomeViewModel @Inject constructor(private val fundsRepository: FundsReposi
             _fetchMutualFunds.postValue(Resource.error("error fetching", null))
         }
 
+    }
+
+    fun fetchMutualFundNav(schemeId: String) = viewModelScope.launch {
+        _fetchMutualFundNav.postValue(Resource.loading(null))
+        try {
+            fundsRepository.fetchMutualFundNav(schemeId).let {
+                if (it.isSuccessful) {
+                    _fetchMutualFundNav.postValue(Resource.success(it.body()))
+                } else {
+                    _fetchMutualFundNav.postValue(Resource.error(it.errorBody().toString(), null))
+                }
+            }
+        } catch (e: Exception) {
+            _fetchMutualFundNav.postValue(Resource.error("error fetching nav", null))
+        }
     }
 }
