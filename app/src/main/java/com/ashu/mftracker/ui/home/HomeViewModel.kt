@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(private val fundsRepository: FundsReposi
 
     }
 
-    fun fetchMutualFundNav(schemeId: String) = viewModelScope.launch {
+    fun fetchMutualFundNav(schemeId: String, schemeName: String) = viewModelScope.launch {
         _fetchMutualFundNav.postValue(Resource.loading(null))
         try {
             fundsRepository.fetchMutualFundNav(schemeId).let {

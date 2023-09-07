@@ -23,7 +23,7 @@ class HomeRecyclerAdapter @Inject constructor():
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charString = constraint?.toString() ?: ""
-                if (charString.isEmpty()) mutualFundWithoutNav = mutualFundWithoutNav else { val filteredList = ArrayList<MutualFundWithoutNav>()
+                if (charString.isEmpty()) mutualFundWithoutNavList = mutualFundWithoutNav else { val filteredList = ArrayList<MutualFundWithoutNav>()
                     mutualFundWithoutNav!!
                         .filter {
                             (it.schemeName.contains(constraint!!, true)) or

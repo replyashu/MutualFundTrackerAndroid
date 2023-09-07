@@ -4,18 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/home_container"
+    android:background="?android:windowBackground"
     tools:context=".ui.home.HomeFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_mutual_fund"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Search uour Mutual Fund here"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_mutual_funds"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/sv_mutual_fund"
         app:layout_constraintTop_toBottomOf="@id/sv_mutual_fund" />

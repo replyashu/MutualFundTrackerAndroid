@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageView
+        android:id="@+id/iv_login_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@raw/mutual_fund" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_button"
         android:layout_width="0dp"
