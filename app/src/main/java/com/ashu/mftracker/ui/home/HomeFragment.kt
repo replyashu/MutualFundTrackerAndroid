@@ -11,13 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ashu.mftracker.R
 import com.ashu.mftracker.databinding.FragmentHomeBinding
 import com.ashu.mftracker.global.network.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
-    androidx.appcompat.widget.SearchView.OnQueryTextListener {
+    androidx.appcompat.widget.SearchView.OnQueryTextListener,
+    androidx.appcompat.widget.SearchView.OnCloseListener {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -35,8 +37,6 @@ class HomeFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -44,6 +44,10 @@ class HomeFragment : Fragment(),
         viewModel.retrieveMutualFunds()
 
         binding.svMutualFund.setOnQueryTextListener(this)
+
+        binding.svMutualFund.setOnCloseListener(this)
+
+        binding.svMutualFund.queryHint = "Search your Mutual Fund here"
 
         binding.rvMutualFunds.layoutManager = LinearLayoutManager(requireContext())
         homeRecyclerAdapter = HomeRecyclerAdapter()
@@ -65,14 +69,22 @@ class HomeFragment : Fragment(),
             }
         }
 
+        var schemeName: String? = null
+
         homeRecyclerAdapter.onItemClick = {
-            viewModel.fetchMutualFundNav(it.schemeCode)
+            // Navigate to NAV fragment with schemeCode
+            schemeName = it.schemeName
+            viewModel.fetchMutualFundNav(it.schemeCode, it.schemeName)
         }
 
         viewModel.fetchMutualFundNav.observe(this) {
             when(it.status) {
                 Status.SUCCESS -> {
-                    Log.d("navData", it.data.toString())
+                    val data = it.data
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.home_container, NavExplorerFragment.newInstance(data, schemeName))
+                    transaction.addToBackStack(null)
+                    transaction.commitAllowingStateLoss()
                 }
                 else -> {
 
@@ -90,6 +102,11 @@ class HomeFragment : Fragment(),
 
     override fun onQueryTextChange(p0: String?): Boolean {
         homeRecyclerAdapter.filter.filter(p0)
+        return false
+    }
+
+    override fun onClose(): Boolean {
+        homeRecyclerAdapter.filter.filter("")
         return false
     }
 

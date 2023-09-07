@@ -10,12 +10,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.ashu.mftracker.R
 import com.ashu.mftracker.data.requests.NotificationToken
 import com.ashu.mftracker.databinding.FragmentLoginBinding
 import com.ashu.mftracker.global.MainActivity
 import com.ashu.mftracker.global.clickWithDebounce
 import com.ashu.mftracker.global.network.Status
 import com.ashu.mftracker.global.utils.Keys
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -53,6 +56,14 @@ class LoginActivity: AppCompatActivity(), View.OnClickListener {
         binding?.googleButton?.clickWithDebounce {
             googleSignIn()
         }
+
+        Glide.with(this)
+            .asGif()
+            .load(R.raw.mutual_fund)
+            .fitCenter()
+            .error(R.drawable.ic_launcher_background)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(binding?.ivLoginBg!!)
 
         viewModel.register.observe(this) {
             when(it.status) {
